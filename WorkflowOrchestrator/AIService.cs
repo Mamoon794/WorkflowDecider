@@ -16,7 +16,9 @@ public class AiOrchestratorService : IAiOrchestratorService
 
     public async Task<List<String>> GenerateStepsAsync(string goal)
     {
-        string apiKey = "YOUR_GEMINI_API_KEY"; 
+        string apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") 
+        ?? throw new InvalidOperationException("GEMINI_API_KEY is missing from .env");
+        
         string url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={apiKey}";
         
         var requestBody = new
